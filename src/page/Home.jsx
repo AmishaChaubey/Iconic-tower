@@ -114,7 +114,7 @@ textarea.fInp { resize: vertical; min-height: 110px; }
 .g4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
 .gServ { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
 .gCta { display: grid; grid-template-columns: 1fr 1fr; border-radius: 12px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,.12); }
-.footGrid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; }
+.footGrid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; }
 .formInner { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .vmGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
 .miniStats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
@@ -263,7 +263,6 @@ export default function IconicTower() {
     return () => clearInterval(t);
   }, []);
 
-  // Prevent body scroll when mobile menu is open
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
@@ -282,16 +281,12 @@ export default function IconicTower() {
           <a href="#home" style={{ textDecoration: "none", lineHeight: 0 }}>
             <img style={{ width: 60, height: 60, objectFit: "contain" }} src="/img/Iconic logo.png" alt="Iconic Tower" />
           </a>
-
-          {/* Desktop Nav */}
           <div className="hideM" style={{ display: "flex", gap: "2rem", alignItems: "center" }}>
             {NAV_LINKS.map(l => <a key={l} href={`#${l.toLowerCase()}`} className="nl">{l}</a>)}
             <a href="#contact" className="btnG" style={{ padding: "10px 24px", borderRadius: 6, fontSize: ".875rem" }}>
               Get In Touch <ArrowRight size={15} />
             </a>
           </div>
-
-          {/* Hamburger */}
           <button
             className="showM"
             onClick={() => setMenuOpen(true)}
@@ -328,7 +323,6 @@ export default function IconicTower() {
       <section id="home" className="hero">
         <img src="/img/banner3.jpg" alt="Iconic Tower" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(100deg,rgba(0,0,0,.82) 0%,rgba(0,0,0,.55) 50%,rgba(0,0,0,.2) 100%)" }} />
-
         <div className="heroContent">
           <h1 className="pf aFU d1" style={{ fontSize: "clamp(2rem, 5vw, 4rem)", fontWeight: 900, color: "#fff", lineHeight: 1.08, marginBottom: 20 }}>
             Where Architecture<br />
@@ -346,14 +340,12 @@ export default function IconicTower() {
             </a>
           </div>
         </div>
-
       </section>
 
       {/* ── ABOUT ── */}
       <section id="about" className="sec" style={{ background: "#fff" }}>
         <div className="wrap">
           <div className="g2">
-            {/* Left – image */}
             <div style={{ position: "relative" }}>
               <div className="iz" style={{ borderRadius: 10, height: "clamp(320px, 45vw, 580px)" }}>
                 <img src="/img/about2.png" alt="About Iconic Tower" style={{ borderRadius: 10 }} />
@@ -362,8 +354,6 @@ export default function IconicTower() {
               <div style={{ position: "absolute", top: -16, left: -16, width: 80, height: 80, border: `2px solid ${G}28`, borderRadius: 6, zIndex: -1 }} />
               <div style={{ position: "absolute", bottom: -16, right: -16, width: 60, height: 60, background: `${G}12`, borderRadius: 6, zIndex: -1 }} />
             </div>
-
-            {/* Right – content */}
             <div>
               <div className="sTag" style={{ marginBottom: 14 }}>About Iconic Tower</div>
               <h2 className="pf" style={{ fontSize: "clamp(1.7rem, 4vw, 2.8rem)", fontWeight: 700, lineHeight: 1.2, color: "#1a1a1a", marginBottom: 20 }}>
@@ -486,7 +476,6 @@ export default function IconicTower() {
             <div className="gDiv" style={{ margin: "18px auto 0" }} />
           </div>
           <div className="vmGrid">
-            {/* Vision */}
             <div style={{ borderRadius: 10, overflow: "hidden", border: `1px solid ${G}18` }}>
               <div className="iz" style={{ height: 220, position: "relative" }}>
                 <img src="https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=700&q=80" alt="Vision" />
@@ -506,7 +495,6 @@ export default function IconicTower() {
                 </p>
               </div>
             </div>
-            {/* Mission */}
             <div style={{ borderRadius: 10, overflow: "hidden", border: `1px solid ${G}30` }}>
               <div className="iz" style={{ height: 220, position: "relative" }}>
                 <img src="https://images.pexels.com/photos/8582991/pexels-photo-8582991.jpeg" alt="Mission" />
@@ -566,7 +554,6 @@ export default function IconicTower() {
               <ChevronRight size={18} />
             </button>
           </div>
-          {/* Dots */}
           <div style={{ display: "flex", justifyContent: "center", gap: 8, marginTop: 28 }}>
             {TESTIMONIALS.map((_, i) => (
               <button key={i} onClick={() => setTestiIdx(i)} aria-label={`Go to ${i + 1}`}
@@ -587,9 +574,6 @@ export default function IconicTower() {
               </h2>
               <div className="gDiv" style={{ marginTop: 14 }} />
             </div>
-            <a href="#" className="btnO" style={{ padding: "11px 26px", borderRadius: 6, fontSize: ".875rem" }}>
-              View All Posts <ArrowRight size={15} />
-            </a>
           </div>
           <div className="g3">
             {visBlogs().map((b, i) => (
@@ -628,7 +612,6 @@ export default function IconicTower() {
             <div className="gDiv" style={{ margin: "18px auto 0" }} />
           </div>
           <div className="gCta">
-            {/* LEFT – contact info */}
             <div style={{ position: "relative", minHeight: "clamp(400px, 55vw, 680px)" }}>
               <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=900&q=85" alt="CTA" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
               <div style={{ position: "absolute", inset: 0, background: "linear-gradient(145deg,rgba(0,0,0,.75),rgba(30,20,8,.6))" }} />
@@ -655,13 +638,10 @@ export default function IconicTower() {
                 ))}
               </div>
             </div>
-
-            {/* RIGHT – Form + Map */}
             <div style={{ background: "#fff", display: "flex", flexDirection: "column" }}>
               <div style={{ padding: "clamp(28px, 5vw, 46px) clamp(20px, 5vw, 42px) 24px", flex: 1 }}>
                 <h4 className="pf" style={{ fontSize: "1.4rem", fontWeight: 700, color: "#1a1a1a", marginBottom: 6 }}>Send Us a Message</h4>
                 <p style={{ fontSize: ".82rem", color: "#aaa", marginBottom: 24 }}>Our team will respond within 24 hours.</p>
-
                 <div className="formInner" style={{ marginBottom: 14 }}>
                   <div>
                     <label style={{ display: "block", fontSize: ".75rem", fontWeight: 600, color: "#555", marginBottom: 6, letterSpacing: ".03em" }}>Full Name *</label>
@@ -691,8 +671,6 @@ export default function IconicTower() {
                   Send Message <Send size={16} />
                 </button>
               </div>
-
-              {/* Map */}
               <div style={{ padding: "0 clamp(20px, 5vw, 42px) clamp(24px, 5vw, 42px)" }}>
                 <div style={{ borderRadius: 8, overflow: "hidden", border: `2px solid ${G}20` }}>
                   <iframe
@@ -714,7 +692,9 @@ export default function IconicTower() {
       {/* ── FOOTER ── */}
       <footer style={{ background: "#050505", padding: "clamp(48px, 7vw, 72px) 0 28px" }}>
         <div className="wrap">
+          {/* footGrid: 3 items → 2fr 1fr 1fr */}
           <div className="footGrid" style={{ marginBottom: 48 }}>
+            {/* Col 1: Logo + Social */}
             <div>
               <div style={{ marginBottom: 18 }}>
                 <img style={{ width: 100, height: 100, objectFit: "contain" }} src="/img/Iconic logo.png" alt="Iconic Tower" />
@@ -730,9 +710,9 @@ export default function IconicTower() {
                 ))}
               </div>
             </div>
+            {/* Col 2 & 3: Services + Contact */}
             {[
               { title: "Services", links: ["Architectural Design","Commercial Properties","Luxury Residences","Property Management","Interior Design"] },
-              { title: "Company", links: ["About Us","Our Projects","Blog & News","Careers","Awards"] },
               { title: "Contact", links: ["+91 9999999999","hello@iconictower.com","Noida, UP","Mon–Sat: 9am–6pm"] },
             ].map((col, i) => (
               <div key={i}>
@@ -749,16 +729,23 @@ export default function IconicTower() {
               </div>
             ))}
           </div>
+
+          {/* Bottom Bar */}
           <div style={{ borderTop: "1px solid rgba(255,255,255,.08)", paddingTop: 24, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 14 }}>
-            <p style={{ fontSize: ".78rem", color: "rgba(255,255,255,.22)" }}>© 2026 Iconic Tower. All rights reserved.</p>
+            <p style={{ fontSize: ".78rem", color: "rgba(255,255,255,.22)", margin: 0 }}>© 2026 Iconic Tower. All rights reserved.</p>
             <div style={{ display: "flex", gap: 20, flexWrap: "wrap" }}>
               {["Privacy Policy","Terms","Cookies"].map((l, i) => (
-                <a key={i} href="#" style={{ fontSize: ".78rem", color: "rgba(255,255,255,.22)", textDecoration: "none" }}>{l}</a>
+                <a key={i} href="#" style={{ fontSize: ".78rem", color: "rgba(255,255,255,.22)", textDecoration: "none" }}
+                  onMouseEnter={e => e.target.style.color = G}
+                  onMouseLeave={e => e.target.style.color = "rgba(255,255,255,.22)"}>
+                  {l}
+                </a>
               ))}
             </div>
           </div>
         </div>
       </footer>
+
     </div>
   );
 }
