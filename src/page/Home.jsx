@@ -39,14 +39,94 @@ body { font-family: 'Poppins', sans-serif; background: #fff; color: #1a1a1a; ove
 img { max-width: 100%; display: block; }
 
 /* ── NAV ── */
-.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 999; transition: all .35s; padding: 16px 0; }
-.nav.sc { background: rgba(255,255,255,.98); box-shadow: 0 2px 30px rgba(0,0,0,.08); padding: 10px 0; }
-.nl { color: rgba(255,255,255,.88); text-decoration: none; font-size: .875rem; font-weight: 500; transition: color .2s; position: relative; white-space: nowrap; }
-.nl::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 2px; background: ${G}; transition: width .2s; }
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+  transition: all .35s; padding: 14px 0;
+}
+.nav.sc {
+  background: rgba(255,255,255,.98);
+  box-shadow: 0 2px 30px rgba(0,0,0,.08);
+  padding: 8px 0;
+}
+.navInner {
+  display: flex; align-items: center; justify-content: space-between;
+  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+}
+.navLinks {
+  display: flex; gap: 1.8rem; align-items: center;
+}
+.nl {
+  color: rgba(255,255,255,.88); text-decoration: none;
+  font-size: .875rem; font-weight: 500;
+  transition: color .2s; position: relative; white-space: nowrap;
+}
+.nl::after {
+  content: ''; position: absolute; bottom: -3px; left: 0;
+  width: 0; height: 2px; background: ${G}; transition: width .2s;
+}
 .nl:hover { color: ${G}; }
 .nl:hover::after { width: 100%; }
 .nav.sc .nl { color: #1a1a1a; }
 .nav.sc .nl:hover { color: ${G}; }
+.navCta {
+  padding: 10px 22px; border-radius: 6px; font-size: .85rem;
+  white-space: nowrap; flex-shrink: 0;
+}
+.menuToggle {
+  display: none; background: none; border: none; cursor: pointer;
+  padding: 6px; border-radius: 6px; transition: background .2s;
+  align-items: center; justify-content: center;
+  color: #fff;
+}
+.menuToggle:hover { background: rgba(255,255,255,.1); }
+.nav.sc .menuToggle { color: #1a1a1a; }
+.nav.sc .menuToggle:hover { background: rgba(0,0,0,.06); }
+
+/* ── MOBILE MENU OVERLAY ── */
+.mOverlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.4);
+  z-index: 998; opacity: 0; pointer-events: none;
+  transition: opacity .35s;
+}
+.mOverlay.open { opacity: 1; pointer-events: all; }
+
+/* ── MOBILE DRAWER ── */
+.mDrawer {
+  position: fixed; top: 0; right: 0; bottom: 0;
+  width: min(320px, 85vw);
+  background: #fff; z-index: 1000;
+  display: flex; flex-direction: column;
+  transform: translateX(100%);
+  transition: transform .38s cubic-bezier(.25,.46,.45,.94);
+  box-shadow: -20px 0 60px rgba(0,0,0,.15);
+}
+.mDrawer.open { transform: translateX(0); }
+.mDrawerHead {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 24px; border-bottom: 1px solid #f0e8d8;
+}
+.mDrawerBody {
+  flex: 1; overflow-y: auto; padding: 8px 0;
+}
+.mNavLink {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 24px; text-decoration: none; color: #1a1a1a;
+  font-size: .95rem; font-weight: 600; font-family: 'Poppins', sans-serif;
+  transition: all .2s; border-left: 3px solid transparent;
+}
+.mNavLink:hover {
+  color: ${G}; background: rgba(208,171,105,.06);
+  border-left-color: ${G};
+}
+.mNavLink span { font-size: .7rem; color: #ccc; }
+.mDrawerFoot {
+  padding: 20px 24px; border-top: 1px solid #f0e8d8;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.mContact {
+  display: flex; align-items: center; gap: 10px;
+  font-size: .8rem; color: #888;
+}
 
 /* ── HERO ── */
 .hero { height: 100svh; min-height: 600px; position: relative; display: flex; align-items: center; overflow: hidden; }
@@ -60,6 +140,7 @@ img { max-width: 100%; display: block; }
 @keyframes countUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:.6; } }
 @keyframes slideInLeft { from { opacity:0; transform: translateX(-30px); } to { opacity:1; transform: translateX(0); } }
+@keyframes drawerFade { from { opacity:0; } to { opacity:1; } }
 
 .aFU { animation: fadeUp .8s ease forwards; opacity: 0; }
 .aFI { animation: fadeIn 1s ease forwards; opacity: 0; }
@@ -87,10 +168,6 @@ img { max-width: 100%; display: block; }
 
 /* ── SCROLL INDICATOR ── */
 .scrollInd { position: absolute; bottom: 32px; left: max(24px, calc((100vw - 1280px) / 2 + 24px)); display: flex; flex-direction: column; align-items: flex-start; gap: 8px; animation: floatY 2.2s ease-in-out infinite; z-index: 10; }
-
-/* ── MOBILE MENU ── */
-.mMenu { position: fixed; inset: 0; background: #fff; z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.8rem; transform: translateX(100%); transition: transform .4s ease; overflow-y: auto; }
-.mMenu.open { transform: translateX(0); }
 
 /* ── SLIDER ── */
 .slTrack { display: flex; transition: transform .65s cubic-bezier(.25,.46,.45,.94); }
@@ -130,13 +207,26 @@ textarea.fInp { resize: vertical; min-height: 110px; }
 .locGrid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
 .investGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 
-/* ── TESTIMONIAL WRAPPER ── */
-.testiWrap { position: relative; overflow: visible; }
+/* ── TESTIMONIAL – fully responsive ── */
+.testiOuter {
+  max-width: 860px; margin: 0 auto; padding: 0 clamp(12px, 5vw, 48px);
+}
+.testiWrap {
+  position: relative;
+}
 .testiSlider { overflow: hidden; border-radius: 10px; }
-.testiBtn { position: absolute; top: 50%; transform: translateY(-50%); background: #fff; border: 2px solid ${G}; color: ${G}; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,.1); transition: all .3s; z-index: 10; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.testiNavRow {
+  display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 28px;
+}
+.testiBtn {
+  background: #fff; border: 2px solid ${G}; color: ${G};
+  width: 40px; height: 40px; border-radius: 50%;
+  cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,.08);
+  transition: all .3s; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
 .testiBtn:hover { background: ${G}; color: #fff; }
-.testiBtn.prev { left: -22px; }
-.testiBtn.next { right: -22px; }
+.testiDots { display: flex; gap: 8px; align-items: center; }
 
 /* ── PROJECT HERO ── */
 .projectHero { position: relative; min-height: 85vh; display: flex; align-items: center; overflow: hidden; background: linear-gradient(135deg,#060606,#141414); }
@@ -158,8 +248,8 @@ textarea.fInp { resize: vertical; min-height: 110px; }
 
 /* ── TABLET (≤1024px) ── */
 @media (max-width: 1024px) {
-  .hideM { display: none !important; }
-  .showM { display: flex !important; }
+  .navLinks { display: none !important; }
+  .menuToggle { display: flex !important; }
   .g2 { grid-template-columns: 1fr !important; gap: 40px !important; }
   .g3 { grid-template-columns: 1fr 1fr !important; }
   .g4 { grid-template-columns: 1fr 1fr !important; }
@@ -171,8 +261,6 @@ textarea.fInp { resize: vertical; min-height: 110px; }
   .investGrid { grid-template-columns: 1fr 1fr !important; }
   .heroContent { padding: 0 24px !important; max-width: 100% !important; margin-left: 0 !important; }
   .scrollInd { left: 24px !important; }
-  .testiBtn.prev { left: -16px; }
-  .testiBtn.next { right: -16px; }
 }
 
 /* ── MOBILE (≤640px) ── */
@@ -188,14 +276,13 @@ textarea.fInp { resize: vertical; min-height: 110px; }
   .payGrid { grid-template-columns: 1fr !important; }
   .locGrid { grid-template-columns: 1fr !important; }
   .investGrid { grid-template-columns: 1fr !important; }
-  .testiBtn.prev { left: -8px; }
-  .testiBtn.next { right: -8px; }
-  .testiBtn { width: 36px; height: 36px; }
   .blogHead { flex-direction: column !important; align-items: flex-start !important; }
   .heroBtns { flex-direction: column !important; }
   .heroBtns a { width: 100% !important; justify-content: center !important; }
   .projectHeroBtns { flex-direction: column !important; }
   .projectHeroBtns a,button { width: 100% !important; justify-content: center !important; }
+  .testiOuter { padding: 0 8px; }
+  .testiBtn { width: 36px; height: 36px; }
 }
 
 /* ── XS MOBILE (≤380px) ── */
@@ -207,7 +294,7 @@ textarea.fInp { resize: vertical; min-height: 110px; }
 
 /* ── DESKTOP ONLY ── */
 @media (min-width: 1025px) {
-  .showM { display: none !important; }
+  .menuToggle { display: none !important; }
 }
 `;
 
@@ -382,51 +469,96 @@ export default function IconicTower() {
 
       {/* ── NAVBAR ── */}
       <nav className={`nav${scrolled ? " sc" : ""}`}>
-        <div className="wrap" style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <a href="#home" style={{ textDecoration: "none", lineHeight: 0 }}>
-            <img style={{ width: 60, height: 60, objectFit: "contain" }} src="/img/Iconic logo.png" alt="Iconic Tower" />
+        <div className="navInner">
+          {/* Logo */}
+          <a href="#home" style={{ textDecoration: "none", lineHeight: 0, flexShrink: 0 }}>
+            <img style={{ width: 52, height: 52, objectFit: "contain" }} src="/img/Iconic logo.png" alt="Iconic Tower" />
           </a>
-          <div className="hideM" style={{ display: "flex", gap: "2rem", alignItems: "center" }}>
+
+          {/* Desktop Links */}
+          <div className="navLinks">
             {NAV_LINKS.map(l => <a key={l} href={`#${l.toLowerCase()}`} className="nl">{l}</a>)}
-            <a href="#contact" className="btnG" style={{ padding: "10px 24px", borderRadius: 6, fontSize: ".875rem" }}>
-              Get In Touch <ArrowRight size={15} />
+            <a href="#contact" className="btnG navCta">
+              Get In Touch <ArrowRight size={14} />
             </a>
           </div>
+
+          {/* Mobile Hamburger */}
           <button
-            className="showM"
+            className="menuToggle"
             onClick={() => setMenuOpen(true)}
-            style={{ background: "none", border: "none", color: scrolled ? "#1a1a1a" : "#fff", cursor: "pointer", padding: 4, alignItems: "center", justifyContent: "center" }}
-            aria-label="Open menu"
+            aria-label="Open navigation menu"
           >
-            <Menu size={26} />
+            <Menu size={24} />
           </button>
         </div>
       </nav>
 
-      {/* ── MOBILE MENU ── */}
-      <div className={`mMenu${menuOpen ? " open" : ""}`} role="dialog" aria-modal="true">
-        <button
-          onClick={() => setMenuOpen(false)}
-          style={{ position: "absolute", top: 20, right: 24, background: "none", border: "none", cursor: "pointer", color: "#1a1a1a" }}
-          aria-label="Close menu"
-        >
-          <X size={26} />
-        </button>
-        <Logo size={34} light={false} />
-        {NAV_LINKS.map(l => (
-          <a key={l} href={`#${l.toLowerCase()}`} onClick={() => setMenuOpen(false)} className="pf"
-            style={{ fontSize: "1.5rem", color: "#1a1a1a", textDecoration: "none", fontWeight: 700 }}>
-            {l}
+      {/* ── MOBILE OVERLAY ── */}
+      <div
+        className={`mOverlay${menuOpen ? " open" : ""}`}
+        onClick={() => setMenuOpen(false)}
+        aria-hidden="true"
+      />
+
+      {/* ── MOBILE DRAWER ── */}
+      <div className={`mDrawer${menuOpen ? " open" : ""}`} role="dialog" aria-modal="true" aria-label="Navigation menu">
+        {/* Drawer Header */}
+        <div className="mDrawerHead">
+          <img style={{ width: 48, height: 48, objectFit: "contain" }} src="/img/Iconic logo.png" alt="Iconic Tower" />
+          <button
+            onClick={() => setMenuOpen(false)}
+            style={{ background: "none", border: "none", cursor: "pointer", color: "#1a1a1a", padding: 6, borderRadius: 6, display: "flex", alignItems: "center", justifyContent: "center", transition: "background .2s" }}
+            onMouseEnter={e => e.currentTarget.style.background = "#f5f5f5"}
+            onMouseLeave={e => e.currentTarget.style.background = "none"}
+            aria-label="Close menu"
+          >
+            <X size={22} />
+          </button>
+        </div>
+
+        {/* Nav Links */}
+        <div className="mDrawerBody">
+          {NAV_LINKS.map((l, i) => (
+            <a
+              key={l}
+              href={`#${l.toLowerCase()}`}
+              className="mNavLink"
+              onClick={() => setMenuOpen(false)}
+              style={{ animationDelay: `${i * 0.05}s` }}
+            >
+              {l}
+              <ChevronRight size={14} style={{ color: "#ccc" }} />
+            </a>
+          ))}
+        </div>
+
+        {/* Drawer Footer */}
+        <div className="mDrawerFoot">
+          <a
+            href="#contact"
+            className="btnG"
+            style={{ padding: "13px 24px", borderRadius: 6, justifyContent: "center", fontSize: ".9rem" }}
+            onClick={() => setMenuOpen(false)}
+          >
+            Get In Touch <ArrowRight size={15} />
           </a>
-        ))}
-        <a href="#contact" className="btnG" style={{ padding: "14px 36px", borderRadius: 6 }} onClick={() => setMenuOpen(false)}>
-          Get In Touch <ArrowRight size={16} />
-        </a>
+          <div style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: 4 }}>
+            <div className="mContact">
+              <Phone size={13} color={G} style={{ flexShrink: 0 }} />
+              <span>+91 9999999999</span>
+            </div>
+            <div className="mContact">
+              <Mail size={13} color={G} style={{ flexShrink: 0 }} />
+              <span>hello@iconictower.com</span>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* ── HERO ── */}
       <section id="home" className="hero">
-        <img src="/img/banner2.png" alt="Iconic Tower" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
+        <img src="/img/banner2.webp" alt="Iconic Tower" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(100deg,rgba(0,0,0,.82) 0%,rgba(0,0,0,.55) 50%,rgba(0,0,0,.2) 100%)" }} />
         <div className="heroContent">
           <h1 className="pf aFU d1" style={{ fontSize: "clamp(2rem, 5vw, 4rem)", fontWeight: 900, color: "#fff", lineHeight: 1.08, marginBottom: 20 }}>
@@ -455,7 +587,6 @@ export default function IconicTower() {
               <div className="iz" style={{ borderRadius: 10, height: "clamp(320px, 45vw, 580px)" }}>
                 <img src="https://i.pinimg.com/1200x/73/7a/cc/737accdfde9f5d7479f5b67a1ade8719.jpg" alt="About Iconic Tower" style={{ borderRadius: 10 }} />
               </div>
-              {/* <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(10,10,10,.5),transparent)", borderRadius: 10, pointerEvents: "none" }} /> */}
               <div style={{ position: "absolute", top: -16, left: -16, width: 80, height: 80, border: `2px solid ${G}28`, borderRadius: 6, zIndex: -1 }} />
               <div style={{ position: "absolute", bottom: -16, right: -16, width: 60, height: 60, background: `${G}12`, borderRadius: 6, zIndex: -1 }} />
             </div>
@@ -492,9 +623,7 @@ export default function IconicTower() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════
-          ── PROJECT SECTION (NEW) ──
-      ══════════════════════════════════════════ */}
+      {/* ── PROJECT SECTION ── */}
       <div id="project">
 
         {/* ── PROJECT HERO BANNER ── */}
@@ -505,7 +634,6 @@ export default function IconicTower() {
             style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
           />
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(110deg,rgba(0,0,0,.92) 0%,rgba(5,5,5,.78) 55%,rgba(0,0,0,.4) 100%)" }} />
-          {/* Decorative vertical line */}
           <div style={{ position: "absolute", left: "max(24px, calc((100vw - 1200px)/2 + 24px))", top: 0, bottom: 0, width: 1, background: `linear-gradient(to bottom, transparent, ${G}50, transparent)`, pointerEvents: "none" }} />
 
           <div className="wrap" style={{ position: "relative", zIndex: 10, width: "100%", padding: "clamp(80px,10vw,120px) 24px clamp(60px,8vw,90px)" }}>
@@ -522,8 +650,6 @@ export default function IconicTower() {
               <p style={{ fontSize: "clamp(.9rem,1.5vw,1.1rem)", color: "rgba(255,255,255,.72)", lineHeight: 1.9, maxWidth: 560, marginBottom: 36 }}>
                 Rising 45 storeys above the evolving landscape of Greater Noida West — designed for families who demand more. Part of an expansive 24-acre premium development, this architectural landmark introduces one of the largest 4-bedroom residences in the micro-market.
               </p>
-
-              {/* Quick Stats Row */}
               <div style={{ display: "flex", gap: 32, flexWrap: "wrap", marginBottom: 36 }}>
                 {[
                   { n: "45", l: "Storeys" },
@@ -536,7 +662,6 @@ export default function IconicTower() {
                   </div>
                 ))}
               </div>
-
               <div className="projectHeroBtns" style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
                 <a href="#contact" className="btnG" style={{ padding: "14px 34px", borderRadius: 6, fontSize: ".92rem" }}>
                   Enquire Now <ArrowRight size={16} />
@@ -561,7 +686,6 @@ export default function IconicTower() {
             </div>
 
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 28 }} className="g2">
-              {/* Config Card */}
               <div style={{ background: "linear-gradient(135deg,#111,#181408)", border: `1px solid ${G}25`, borderRadius: 12, padding: "clamp(28px,5vw,44px)", position: "relative", overflow: "hidden" }}>
                 <div style={{ position: "absolute", top: -30, right: -30, width: 140, height: 140, borderRadius: "50%", background: `radial-gradient(circle, ${G}12, transparent 70%)`, pointerEvents: "none" }} />
                 <div className="sTag" style={{ marginBottom: 16 }}>Configuration</div>
@@ -592,7 +716,6 @@ export default function IconicTower() {
                 ))}
               </div>
 
-              {/* Price Banner */}
               <div className="priceBanner">
                 <div className="sTag" style={{ color: GL, marginBottom: 12 }}>Starting Price</div>
                 <div className="pf" style={{ fontSize: "clamp(2rem,6vw,4rem)", fontWeight: 900, color: G, lineHeight: 1, marginBottom: 6 }}>
@@ -632,10 +755,9 @@ export default function IconicTower() {
             </div>
 
             <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-              {/* Always show first 4, toggle rest */}
               <div className="payGrid">
                 {(payOpen ? PAYMENT_PLAN : PAYMENT_PLAN.slice(0, 6)).map(({ pct, label }, i) => (
-                  <div key={i} className="payStep" style={{ animationDelay: `${i * 0.05}s` }}>
+                  <div key={i} className="payStep">
                     <div style={{ width: 36, height: 36, borderRadius: 8, background: `${G}15`, border: `1px solid ${G}25`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                       <span style={{ fontSize: ".65rem", fontWeight: 700, color: G }}>{i + 1}</span>
                     </div>
@@ -687,7 +809,6 @@ export default function IconicTower() {
                 <div className="iz" style={{ borderRadius: 10, height: "clamp(300px, 42vw, 560px)" }}>
                   <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80" alt="Luxury Interior" style={{ borderRadius: 10 }} />
                 </div>
-                {/* Floating badge */}
                 <div style={{ position: "absolute", bottom: 24, left: -20, background: "linear-gradient(135deg,#0a0a0a,#181408)", border: `1px solid ${G}30`, borderRadius: 10, padding: "14px 20px", boxShadow: `0 12px 40px rgba(0,0,0,.25)` }}>
                   <div className="pf" style={{ fontSize: "1.4rem", fontWeight: 700, color: G }}>12 Ft</div>
                   <div style={{ fontSize: ".72rem", color: "rgba(255,255,255,.5)", letterSpacing: ".08em" }}>FLOOR-TO-CEILING HEIGHT</div>
@@ -712,7 +833,6 @@ export default function IconicTower() {
               <div className="gDiv" style={{ margin: "18px auto 14px" }} />
               <p style={{ fontSize: ".9rem", color: "#888", maxWidth: 480, margin: "0 auto" }}>Luxury here is not added. It is integrated.</p>
             </div>
-
             <div className="amenGrid">
               {AMENITIES.map((a, i) => (
                 <div key={i} className="amenItem">
@@ -771,7 +891,6 @@ export default function IconicTower() {
               </h2>
               <div className="gDiv" style={{ margin: "18px auto 0" }} />
             </div>
-
             <div className="investGrid">
               {INVEST_REASONS.map(({ Icon: Ic, title, desc }, i) => (
                 <div key={i} className="investCard">
@@ -807,7 +926,6 @@ export default function IconicTower() {
         </section>
 
       </div>
-      {/* ── END PROJECT SECTION ── */}
 
       {/* ── SERVICES ── */}
       <section id="services" className="sec" style={{ background: "#fafaf8" }}>
@@ -940,25 +1058,33 @@ export default function IconicTower() {
         </div>
       </section>
 
-      {/* ── TESTIMONIALS ── */}
+      {/* ── TESTIMONIALS – fully responsive ── */}
       <section className="sec" style={{ background: "#fafaf8" }}>
-        <div style={{ maxWidth: 900, margin: "0 auto", padding: "0 40px" }}>
-          <div style={{ textAlign: "center", marginBottom: 52 }}>
-            <div className="sTag" style={{ marginBottom: 14 }}>Client Stories</div>
-            <h2 className="pf" style={{ fontSize: "clamp(1.7rem, 4vw, 2.8rem)", fontWeight: 700, color: "#1a1a1a" }}>
-              What Our <span style={{ color: G }}>Clients Say</span>
-            </h2>
-            <div className="gDiv" style={{ margin: "18px auto 0" }} />
-          </div>
+        <div style={{ textAlign: "center", marginBottom: 52, padding: "0 24px" }}>
+          <div className="sTag" style={{ marginBottom: 14 }}>Client Stories</div>
+          <h2 className="pf" style={{ fontSize: "clamp(1.7rem, 4vw, 2.8rem)", fontWeight: 700, color: "#1a1a1a" }}>
+            What Our <span style={{ color: G }}>Clients Say</span>
+          </h2>
+          <div className="gDiv" style={{ margin: "18px auto 0" }} />
+        </div>
+
+        {/* Outer wrapper handles padding safely on all screen sizes */}
+        <div className="testiOuter">
           <div className="testiWrap">
             <div className="testiSlider">
               <div className="slTrack" style={{ transform: `translateX(-${testiIdx * 100}%)` }}>
                 {TESTIMONIALS.map((t, i) => (
-                  <div key={i} style={{ minWidth: "100%", padding: "0 4px" }}>
-                    <div style={{ background: "#fff", borderRadius: 10, padding: "clamp(28px, 5vw, 48px) clamp(20px, 5vw, 44px)", border: `1px solid ${G}18`, boxShadow: "0 16px 60px rgba(0,0,0,.06)", textAlign: "center" }}>
-                      <Quote size={36} color={G} style={{ opacity: 0.12, marginBottom: 12, display: "block", margin: "0 auto 12px" }} />
+                  <div key={i} style={{ minWidth: "100%", padding: "0 2px" }}>
+                    <div style={{
+                      background: "#fff", borderRadius: 12,
+                      padding: "clamp(24px, 5vw, 48px) clamp(20px, 5vw, 44px)",
+                      border: `1px solid ${G}18`,
+                      boxShadow: "0 16px 60px rgba(0,0,0,.06)",
+                      textAlign: "center",
+                    }}>
+                      <Quote size={34} color={G} style={{ opacity: 0.12, display: "block", margin: "0 auto 12px" }} />
                       <div style={{ display: "flex", justifyContent: "center", marginBottom: 18 }}><StarRow /></div>
-                      <p className="pf" style={{ fontSize: "clamp(.95rem, 2vw, 1.15rem)", color: "#333", lineHeight: 1.95, fontStyle: "italic", marginBottom: 30 }}>"{t.text}"</p>
+                      <p className="pf" style={{ fontSize: "clamp(.9rem, 2vw, 1.1rem)", color: "#333", lineHeight: 1.95, fontStyle: "italic", marginBottom: 28 }}>"{t.text}"</p>
                       <div style={{ width: 56, height: 56, borderRadius: "50%", overflow: "hidden", margin: "0 auto 12px", border: `3px solid ${G}` }}>
                         <img src={t.img} alt={t.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                       </div>
@@ -969,18 +1095,41 @@ export default function IconicTower() {
                 ))}
               </div>
             </div>
-            <button className="testiBtn prev" onClick={() => setTestiIdx(p => (p - 1 + TESTIMONIALS.length) % TESTIMONIALS.length)} aria-label="Previous">
-              <ChevronLeft size={18} />
-            </button>
-            <button className="testiBtn next" onClick={() => setTestiIdx(p => (p + 1) % TESTIMONIALS.length)} aria-label="Next">
-              <ChevronRight size={18} />
-            </button>
           </div>
-          <div style={{ display: "flex", justifyContent: "center", gap: 8, marginTop: 28 }}>
-            {TESTIMONIALS.map((_, i) => (
-              <button key={i} onClick={() => setTestiIdx(i)} aria-label={`Go to ${i + 1}`}
-                style={{ width: i === testiIdx ? 28 : 10, height: 10, borderRadius: 5, border: "none", cursor: "pointer", background: i === testiIdx ? G : "#ddd", transition: "all .3s" }} />
-            ))}
+
+          {/* Nav row: prev | dots | next — always in a row, never overflows */}
+          <div className="testiNavRow">
+            <button
+              className="testiBtn"
+              onClick={() => setTestiIdx(p => (p - 1 + TESTIMONIALS.length) % TESTIMONIALS.length)}
+              aria-label="Previous testimonial"
+            >
+              <ChevronLeft size={17} />
+            </button>
+
+            <div className="testiDots">
+              {TESTIMONIALS.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setTestiIdx(i)}
+                  aria-label={`Go to testimonial ${i + 1}`}
+                  style={{
+                    width: i === testiIdx ? 26 : 10, height: 10,
+                    borderRadius: 5, border: "none", cursor: "pointer",
+                    background: i === testiIdx ? G : "#ddd",
+                    transition: "all .3s", padding: 0,
+                  }}
+                />
+              ))}
+            </div>
+
+            <button
+              className="testiBtn"
+              onClick={() => setTestiIdx(p => (p + 1) % TESTIMONIALS.length)}
+              aria-label="Next testimonial"
+            >
+              <ChevronRight size={17} />
+            </button>
           </div>
         </div>
       </section>
@@ -1162,7 +1311,6 @@ export default function IconicTower() {
           </div>
         </div>
       </footer>
-
     </div>
   );
 }
